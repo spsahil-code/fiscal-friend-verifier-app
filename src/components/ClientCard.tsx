@@ -1,6 +1,6 @@
 
 import { format } from "date-fns";
-import { Check, X } from "lucide-react";
+import { Check, X, Clock } from "lucide-react";
 import { Client } from "@/types/client";
 import { 
   Card, 
@@ -40,9 +40,13 @@ const ClientCard = ({ client, index }: ClientCardProps) => {
         </div>
         
         <div className="flex-shrink-0 ml-2">
-          {client.isVerified ? (
+          {client.isVerified === true ? (
             <Badge className="bg-green-500 hover:bg-green-600 flex items-center gap-1">
               <Check size={14} /> Verified
+            </Badge>
+          ) : client.isVerified === "pending" ? (
+            <Badge variant="secondary" className="flex items-center gap-1 bg-amber-500 hover:bg-amber-600 text-white">
+              <Clock size={14} /> Pending
             </Badge>
           ) : (
             <Badge variant="destructive" className="flex items-center gap-1">

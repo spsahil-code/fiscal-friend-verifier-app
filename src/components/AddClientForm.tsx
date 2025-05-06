@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
-import { Calendar as CalendarIcon, Check, X } from "lucide-react";
+import { Calendar as CalendarIcon, Check, X, Clock } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -60,7 +60,7 @@ const AddClientForm = ({ onAddClient }: AddClientFormProps) => {
   const [assessmentYear, setAssessmentYear] = useState(
     getAssessmentYear(financialYear)
   );
-  const [isVerified, setIsVerified] = useState(false);
+  const [verificationStatus, setVerificationStatus] = useState<boolean | "pending">(false);
   const [date, setDate] = useState<Date>(new Date());
   
   const financialYears = generateFinancialYears();
@@ -86,7 +86,7 @@ const AddClientForm = ({ onAddClient }: AddClientFormProps) => {
       id: Date.now().toString(),
       name,
       financialYear,
-      isVerified,
+      isVerified: verificationStatus,
       date,
     };
 
@@ -95,7 +95,7 @@ const AddClientForm = ({ onAddClient }: AddClientFormProps) => {
     // Reset form
     setName("");
     setFinancialYear(`${new Date().getFullYear()}-${new Date().getFullYear() + 1}`);
-    setIsVerified(false);
+    setVerificationStatus(false);
     setDate(new Date());
     
     toast({
@@ -149,28 +149,40 @@ const AddClientForm = ({ onAddClient }: AddClientFormProps) => {
             </div>
           </div>
 
-          <div className="flex items-center justify-between space-x-2">
-            <Label htmlFor="verified">Verification Status</Label>
-            <div className="flex items-center space-x-2">
-              <Switch 
-                checked={isVerified}
-                onCheckedChange={setIsVerified}
-                id="verified"
-              />
-              <span className="text-sm font-medium flex items-center">
-                {isVerified ? (
-                  <>
-                    <Check className="text-green-500 mr-1" size={16} />
-                    Verified
-                  </>
-                ) : (
-                  <>
-                    <X className="text-red-500 mr-1" size={16} />
-                    Not Verified
-                  </>
-                )}
-              </span>
-            </div>
+          <div className="space-y-2">
+            <Label htmlFor="verification-status">Verification Status</Label>
+            <Select 
+              value={verificationStatus === true ? "verified" : verificationStatus === "pending" ? "pending" : "not-verified"}
+              onValueChange={(value) => {
+                if (value === "verified") setVerificationStatus(true);
+                else if (value === "pending") setVerificationStatus("pending");
+                else setVerificationStatus(false);
+              }}
+            >
+              <SelectTrigger id="verification-status">
+                <SelectValue placeholder="Select verification status" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="verified">
+                  <div className="flex items-center gap-2">
+                    <Check className="h-4 w-4 text-green-500" />
+                    <span>Verified</span>
+                  </div>
+                </SelectItem>
+                <SelectItem value="not-verified">
+                  <div className="flex items-center gap-2">
+                    <X className="h-4 w-4 text-red-500" />
+                    <span>Not Verified</span>
+                  </div>
+                </SelectItem>
+                <SelectItem value="pending">
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4 text-amber-500" />
+                    <span>Pending</span>
+                  </div>
+                </SelectItem>
+              </SelectContent>
+            </Select>
           </div>
 
           <div className="space-y-2">

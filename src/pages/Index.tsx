@@ -20,6 +20,13 @@ const initialClients: Client[] = [
     isVerified: false,
     date: new Date("2023-06-22"),
   },
+  {
+    id: "3",
+    name: "Smith & Associates",
+    financialYear: "2023-2024",
+    isVerified: "pending",
+    date: new Date("2023-08-15"),
+  },
 ];
 
 const Index = () => {
