@@ -26,11 +26,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  Switch,
-  SwitchThumb,
-  SwitchTrack 
-} from "@/components/ui/switch";
+import { Switch } from "@/components/ui/switch";
 import { toast } from "@/hooks/use-toast";
 import { Client } from "@/types/client";
 
@@ -134,11 +130,7 @@ const AddClientForm = ({ onAddClient }: AddClientFormProps) => {
                 checked={isVerified}
                 onCheckedChange={setIsVerified}
                 id="verified"
-              >
-                <SwitchTrack>
-                  <SwitchThumb />
-                </SwitchTrack>
-              </Switch>
+              />
               <span className="text-sm font-medium flex items-center">
                 {isVerified ? (
                   <>
