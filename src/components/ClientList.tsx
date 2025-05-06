@@ -1,6 +1,7 @@
 
 import { Client } from "@/types/client";
 import ClientCard from "./ClientCard";
+import { ListOrdered } from "lucide-react";
 
 interface ClientListProps {
   clients: Client[];
@@ -17,9 +18,17 @@ const ClientList = ({ clients }: ClientListProps) => {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-bold mb-4">Client List</h2>
-      {clients.map((client) => (
-        <ClientCard key={client.id} client={client} />
+      <div className="flex items-center gap-2 mb-6">
+        <ListOrdered className="h-5 w-5 text-primary" />
+        <h2 className="text-2xl font-bold">Client List</h2>
+      </div>
+      
+      {clients.map((client, index) => (
+        <ClientCard 
+          key={client.id} 
+          client={client} 
+          index={index + 1} 
+        />
       ))}
     </div>
   );

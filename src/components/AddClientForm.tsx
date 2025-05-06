@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon, Check, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -46,15 +46,29 @@ const generateFinancialYears = () => {
   return years;
 };
 
+// Function to determine assessment year from financial year
+const getAssessmentYear = (financialYear: string): string => {
+  const endYear = financialYear.split('-')[1];
+  return `A.Y. ${endYear}-${parseInt(endYear) + 1}`;
+};
+
 const AddClientForm = ({ onAddClient }: AddClientFormProps) => {
   const [name, setName] = useState("");
   const [financialYear, setFinancialYear] = useState(
     `${new Date().getFullYear()}-${new Date().getFullYear() + 1}`
   );
+  const [assessmentYear, setAssessmentYear] = useState(
+    getAssessmentYear(financialYear)
+  );
   const [isVerified, setIsVerified] = useState(false);
   const [date, setDate] = useState<Date>(new Date());
   
   const financialYears = generateFinancialYears();
+
+  // Update assessment year when financial year changes
+  useEffect(() => {
+    setAssessmentYear(getAssessmentYear(financialYear));
+  }, [financialYear]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -93,7 +107,7 @@ const AddClientForm = ({ onAddClient }: AddClientFormProps) => {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Add New Client</CardTitle>
+        <CardTitle className="text-xl">Add New Client</CardTitle>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -107,20 +121,32 @@ const AddClientForm = ({ onAddClient }: AddClientFormProps) => {
             />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="financial-year">Financial Year</Label>
-            <Select value={financialYear} onValueChange={setFinancialYear}>
-              <SelectTrigger id="financial-year">
-                <SelectValue placeholder="Select financial year" />
-              </SelectTrigger>
-              <SelectContent>
-                {financialYears.map((year) => (
-                  <SelectItem key={year} value={year}>
-                    {year}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="financial-year">Financial Year</Label>
+              <Select value={financialYear} onValueChange={setFinancialYear}>
+                <SelectTrigger id="financial-year">
+                  <SelectValue placeholder="Select financial year" />
+                </SelectTrigger>
+                <SelectContent>
+                  {financialYears.map((year) => (
+                    <SelectItem key={year} value={year}>
+                      {year}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="assessment-year">Assessment Year</Label>
+              <Input 
+                id="assessment-year" 
+                value={assessmentYear} 
+                readOnly 
+                className="bg-muted/30"
+              />
+            </div>
           </div>
 
           <div className="flex items-center justify-between space-x-2">
