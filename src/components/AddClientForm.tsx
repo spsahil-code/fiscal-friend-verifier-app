@@ -1,7 +1,6 @@
-
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
-import { Calendar as CalendarIcon, Check, X, Clock } from "lucide-react";
+import { Calendar as CalendarIcon, Check, X, Clock, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -26,12 +25,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
 import { toast } from "@/hooks/use-toast";
 import { Client } from "@/types/client";
 
 interface AddClientFormProps {
-  onAddClient: (client: Client) => void;
+  onAddClient: (client: Omit<Client, "id">) => Promise<void>;
 }
 
 const generateFinancialYears = () => {
@@ -62,6 +60,7 @@ const AddClientForm = ({ onAddClient }: AddClientFormProps) => {
   );
   const [verificationStatus, setVerificationStatus] = useState<boolean | "pending">(false);
   const [date, setDate] = useState<Date>(new Date());
+  const [isSubmitting, setIsSubmitting] = useState(false);
   
   const financialYears = generateFinancialYears();
 
@@ -70,7 +69,7 @@ const AddClientForm = ({ onAddClient }: AddClientFormProps) => {
     setAssessmentYear(getAssessmentYear(financialYear));
   }, [financialYear]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     if (!name.trim()) {
@@ -82,26 +81,38 @@ const AddClientForm = ({ onAddClient }: AddClientFormProps) => {
       return;
     }
 
-    const newClient: Client = {
-      id: Date.now().toString(),
+    setIsSubmitting(true);
+
+    const newClient: Omit<Client, "id"> = {
       name,
       financialYear,
       isVerified: verificationStatus,
       date,
     };
 
-    onAddClient(newClient);
-    
-    // Reset form
-    setName("");
-    setFinancialYear(`${new Date().getFullYear()}-${new Date().getFullYear() + 1}`);
-    setVerificationStatus(false);
-    setDate(new Date());
-    
-    toast({
-      title: "Success",
-      description: "Client added successfully",
-    });
+    try {
+      await onAddClient(newClient);
+      
+      // Reset form
+      setName("");
+      setFinancialYear(`${new Date().getFullYear()}-${new Date().getFullYear() + 1}`);
+      setVerificationStatus(false);
+      setDate(new Date());
+      
+      toast({
+        title: "Success",
+        description: "Client added successfully",
+      });
+    } catch (error) {
+      console.error("Error adding client:", error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to add client",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -111,6 +122,8 @@ const AddClientForm = ({ onAddClient }: AddClientFormProps) => {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
+          
+          
           <div className="space-y-2">
             <Label htmlFor="name">Client Name</Label>
             <Input 
@@ -213,7 +226,20 @@ const AddClientForm = ({ onAddClient }: AddClientFormProps) => {
           </div>
           
           <CardFooter className="px-0 pt-6">
-            <Button type="submit" className="w-full">Add Client</Button>
+            <Button 
+              type="submit" 
+              className="w-full"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Adding...
+                </>
+              ) : (
+                "Add Client"
+              )}
+            </Button>
           </CardFooter>
         </form>
       </CardContent>

@@ -1,39 +1,31 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Client } from "@/types/client";
 import AddClientForm from "@/components/AddClientForm";
 import ClientList from "@/components/ClientList";
-
-// Sample initial data
-const initialClients: Client[] = [
-  {
-    id: "1",
-    name: "Acme Corporation",
-    financialYear: "2024-2025",
-    isVerified: true,
-    date: new Date("2024-01-15"),
-  },
-  {
-    id: "2",
-    name: "Globex Industries",
-    financialYear: "2023-2024",
-    isVerified: false,
-    date: new Date("2023-06-22"),
-  },
-  {
-    id: "3",
-    name: "Smith & Associates",
-    financialYear: "2023-2024",
-    isVerified: "pending",
-    date: new Date("2023-08-15"),
-  },
-];
+import { getClients, addClient } from "@/services/clientService";
+import { Loader2 } from "lucide-react";
 
 const Index = () => {
-  const [clients, setClients] = useState<Client[]>(initialClients);
+  const [clients, setClients] = useState<Client[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const handleAddClient = (client: Client) => {
-    setClients([client, ...clients]);
+  useEffect(() => {
+    const fetchClients = async () => {
+      setIsLoading(true);
+      const data = await getClients();
+      setClients(data);
+      setIsLoading(false);
+    };
+
+    fetchClients();
+  }, []);
+
+  const handleAddClient = async (clientData: Omit<Client, "id">) => {
+    const newClient = await addClient(clientData);
+    if (newClient) {
+      setClients([newClient, ...clients]);
+    }
   };
 
   return (
@@ -46,7 +38,13 @@ const Index = () => {
         </div>
         
         <div className="lg:col-span-2">
-          <ClientList clients={clients} />
+          {isLoading ? (
+            <div className="flex items-center justify-center h-64">
+              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+            </div>
+          ) : (
+            <ClientList clients={clients} />
+          )}
         </div>
       </div>
     </div>
