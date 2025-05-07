@@ -27,11 +27,11 @@ const ClientList = ({ clients, onStatusUpdate }: ClientListProps) => {
 
   if (clients.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center p-16 border-2 border-dashed rounded-md border-muted">
+      <div className="flex flex-col items-center justify-center p-16 border-2 border-dashed rounded-md border-muted dark:border-muted/50">
         <Users className="h-12 w-12 text-muted-foreground mb-4 opacity-50" />
         <h3 className="text-xl font-medium mb-1">No clients yet</h3>
         <p className="text-muted-foreground text-center max-w-md">
-          Add your first client using the form on the left to get started with client verification.
+          Add your first client using the Add Client button above to get started with client verification.
         </p>
       </div>
     );
@@ -42,7 +42,7 @@ const ClientList = ({ clients, onStatusUpdate }: ClientListProps) => {
       <div className="flex items-center justify-between mb-2">
         <div className="flex items-center gap-2">
           <ListOrdered className="h-5 w-5 text-primary" />
-          <h2 className="text-2xl font-bold">Client List</h2>
+          <h2 className="text-2xl font-bold dark:text-white">Client List</h2>
         </div>
         <div className="text-sm text-muted-foreground">
           Total: <span className="font-medium">{clients.length}</span> clients
@@ -50,33 +50,33 @@ const ClientList = ({ clients, onStatusUpdate }: ClientListProps) => {
       </div>
       
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
-        <div className="bg-secondary/50 p-4 rounded-lg border flex items-center gap-3">
-          <div className="bg-green-100 p-2 rounded-full">
-            <Check size={20} className="text-green-600" />
+        <div className="bg-secondary/50 dark:bg-secondary/30 p-4 rounded-lg border flex items-center gap-3 card-hover">
+          <div className="bg-green-100 dark:bg-green-900/30 p-2 rounded-full">
+            <Check size={20} className="text-green-600 dark:text-green-400" />
           </div>
           <div>
             <div className="text-sm text-muted-foreground">Verified</div>
-            <div className="text-2xl font-bold">{verifiedCount}</div>
+            <div className="text-2xl font-bold dark:text-white">{verifiedCount}</div>
           </div>
         </div>
         
-        <div className="bg-secondary/50 p-4 rounded-lg border flex items-center gap-3">
-          <div className="bg-red-100 p-2 rounded-full">
-            <X size={20} className="text-red-600" />
+        <div className="bg-secondary/50 dark:bg-secondary/30 p-4 rounded-lg border flex items-center gap-3 card-hover">
+          <div className="bg-red-100 dark:bg-red-900/30 p-2 rounded-full">
+            <X size={20} className="text-red-600 dark:text-red-400" />
           </div>
           <div>
             <div className="text-sm text-muted-foreground">Not Verified</div>
-            <div className="text-2xl font-bold">{notVerifiedCount}</div>
+            <div className="text-2xl font-bold dark:text-white">{notVerifiedCount}</div>
           </div>
         </div>
         
-        <div className="bg-secondary/50 p-4 rounded-lg border flex items-center gap-3">
-          <div className="bg-amber-100 p-2 rounded-full">
-            <Clock size={20} className="text-amber-600" />
+        <div className="bg-secondary/50 dark:bg-secondary/30 p-4 rounded-lg border flex items-center gap-3 card-hover">
+          <div className="bg-amber-100 dark:bg-amber-900/30 p-2 rounded-full">
+            <Clock size={20} className="text-amber-600 dark:text-amber-400" />
           </div>
           <div>
             <div className="text-sm text-muted-foreground">Pending</div>
-            <div className="text-2xl font-bold">{pendingCount}</div>
+            <div className="text-2xl font-bold dark:text-white">{pendingCount}</div>
           </div>
         </div>
       </div>
