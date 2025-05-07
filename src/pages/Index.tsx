@@ -5,7 +5,7 @@ import AddClientDialog from "@/components/AddClientDialog";
 import ClientList from "@/components/ClientList";
 import ThemeToggle from "@/components/ThemeToggle";
 import { getClients, addClient } from "@/services/clientService";
-import { Loader2, Users } from "lucide-react";
+import { Loader2, Users, Plus } from "lucide-react";
 
 const Index = () => {
   const [clients, setClients] = useState<Client[]>([]);
@@ -38,28 +38,28 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20 dark:from-background dark:to-secondary/10 transition-colors duration-300">
       <ThemeToggle />
-      <div className="container mx-auto py-12 px-4 max-w-7xl">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center justify-center p-3 bg-primary/10 rounded-full mb-4">
-            <Users className="h-8 w-8 text-primary" />
+      <div className="container mx-auto py-6 md:py-12 px-3 md:px-4 max-w-7xl">
+        <div className="text-center mb-6 md:mb-12">
+          <div className="inline-flex items-center justify-center p-2 md:p-3 bg-primary/10 rounded-full mb-3 md:mb-4">
+            <Users className="h-6 w-6 md:h-8 md:w-8 text-primary" />
           </div>
-          <h1 className="text-4xl font-bold text-foreground bg-gradient-to-r from-primary to-primary/80 bg-clip-text dark:text-transparent">
+          <h1 className="text-2xl md:text-4xl font-bold text-foreground bg-gradient-to-r from-primary to-primary/80 bg-clip-text dark:text-transparent">
             Client Verification App
           </h1>
-          <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
-            Manage and track verification status for all your clients in one place
+          <p className="text-sm md:text-base text-muted-foreground mt-2 max-w-2xl mx-auto px-4">
+            Manage and track verification status for all your clients
           </p>
         </div>
         
-        <div className="grid grid-cols-1 gap-8">
-          <div className="flex justify-end mb-4">
+        <div className="grid grid-cols-1 gap-4 md:gap-8">
+          <div className="flex justify-end mb-2 md:mb-4">
             <AddClientDialog onAddClient={handleAddClient} />
           </div>
           
           <div>
             <div className="bg-card rounded-xl shadow-lg border h-full animate-in fade-in slide-in-from-bottom-3 duration-500 dark:shadow-xl dark:shadow-primary/5">
               {isLoading ? (
-                <div className="flex items-center justify-center h-64 flex-col gap-2">
+                <div className="flex items-center justify-center h-48 md:h-64 flex-col gap-2">
                   <Loader2 className="h-8 w-8 animate-spin text-primary" />
                   <p className="text-muted-foreground">Loading clients...</p>
                 </div>
