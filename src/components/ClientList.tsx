@@ -7,9 +7,10 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 interface ClientListProps {
   clients: Client[];
+  onStatusUpdate: (id: string, newStatus: boolean | "pending") => void;
 }
 
-const ClientList = ({ clients }: ClientListProps) => {
+const ClientList = ({ clients, onStatusUpdate }: ClientListProps) => {
   const [activeTab, setActiveTab] = useState<"all" | "verified" | "not-verified" | "pending">("all");
   
   const filteredClients = clients.filter(client => {
@@ -53,25 +54,45 @@ const ClientList = ({ clients }: ClientListProps) => {
 
         <TabsContent value="all" className="space-y-4">
           {filteredClients.map((client, index) => (
-            <ClientCard key={client.id} client={client} index={index + 1} />
+            <ClientCard 
+              key={client.id} 
+              client={client} 
+              index={index + 1}
+              onStatusUpdate={onStatusUpdate} 
+            />
           ))}
         </TabsContent>
         
         <TabsContent value="verified" className="space-y-4">
           {filteredClients.map((client, index) => (
-            <ClientCard key={client.id} client={client} index={index + 1} />
+            <ClientCard 
+              key={client.id} 
+              client={client} 
+              index={index + 1}
+              onStatusUpdate={onStatusUpdate} 
+            />
           ))}
         </TabsContent>
         
         <TabsContent value="not-verified" className="space-y-4">
           {filteredClients.map((client, index) => (
-            <ClientCard key={client.id} client={client} index={index + 1} />
+            <ClientCard 
+              key={client.id} 
+              client={client} 
+              index={index + 1}
+              onStatusUpdate={onStatusUpdate} 
+            />
           ))}
         </TabsContent>
         
         <TabsContent value="pending" className="space-y-4">
           {filteredClients.map((client, index) => (
-            <ClientCard key={client.id} client={client} index={index + 1} />
+            <ClientCard 
+              key={client.id} 
+              client={client} 
+              index={index + 1}
+              onStatusUpdate={onStatusUpdate} 
+            />
           ))}
         </TabsContent>
       </Tabs>

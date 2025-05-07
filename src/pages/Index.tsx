@@ -28,6 +28,12 @@ const Index = () => {
     }
   };
 
+  const handleStatusUpdate = (id: string, newStatus: boolean | "pending") => {
+    setClients(clients.map(client => 
+      client.id === id ? { ...client, isVerified: newStatus } : client
+    ));
+  };
+
   return (
     <div className="container mx-auto py-8 px-4 max-w-6xl">
       <h1 className="text-3xl font-bold mb-8 text-center">Client Verification App</h1>
@@ -43,7 +49,10 @@ const Index = () => {
               <Loader2 className="h-8 w-8 animate-spin text-primary" />
             </div>
           ) : (
-            <ClientList clients={clients} />
+            <ClientList 
+              clients={clients} 
+              onStatusUpdate={handleStatusUpdate}
+            />
           )}
         </div>
       </div>

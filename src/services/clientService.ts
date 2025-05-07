@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { Client } from "@/types/client";
 import { toast } from "@/hooks/use-toast";
@@ -83,5 +82,43 @@ export async function addClient(client: Omit<Client, "id">): Promise<Client | nu
       description: "An unexpected error occurred",
     });
     return null;
+  }
+}
+
+export async function updateClientVerification(id: string, isVerified: boolean | "pending"): Promise<boolean> {
+  try {
+    const { error } = await supabase
+      .from("clients")
+      .update({
+        is_verified: typeof isVerified === "boolean" 
+          ? isVerified.toString() 
+          : isVerified,
+        updated_at: new Date().toISOString()
+      })
+      .eq("id", id);
+
+    if (error) {
+      console.error("Error updating client verification:", error);
+      toast({
+        variant: "destructive",
+        title: "Error",
+        description: "Failed to update client verification status",
+      });
+      return false;
+    }
+
+    toast({
+      title: "Success",
+      description: "Client verification status updated",
+    });
+    return true;
+  } catch (error) {
+    console.error("Unexpected error:", error);
+    toast({
+      variant: "destructive",
+      title: "Error",
+      description: "An unexpected error occurred",
+    });
+    return false;
   }
 }
