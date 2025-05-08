@@ -44,7 +44,7 @@ const Index = () => {
             <Users className="h-6 w-6 md:h-8 md:w-8 text-primary" />
           </div>
           <h1 className="text-2xl md:text-4xl font-bold text-foreground dark:bg-gradient-to-br dark:from-white dark:to-primary/70 dark:bg-clip-text dark:text-transparent">
-            Client Verification App
+            SPClient
           </h1>
           <p className="text-xs md:text-base text-muted-foreground mt-1 md:mt-2 max-w-2xl mx-auto">
             Manage and track verification status for all your clients
