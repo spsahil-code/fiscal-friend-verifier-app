@@ -42,19 +42,18 @@ const ClientCard = ({ client, index, onStatusUpdate }: ClientCardProps) => {
   };
 
   return (
-    <Card className="w-full overflow-hidden hover:shadow-md transition-all duration-300 group animate-in fade-in-50">
+    <Card className="w-full overflow-hidden hover:shadow-md transition-all duration-300 group animate-in fade-in-50 border-l-4 dark:bg-secondary/10 backdrop-blur-sm 
+      ${client.isVerified === true ? 'border-l-green-500 dark:border-l-green-400' : 
+      client.isVerified === 'pending' ? 'border-l-amber-500 dark:border-l-amber-400' : 
+      'border-l-red-500 dark:border-l-red-400'}"
+    >
       <CardContent className="p-0">
         <div className="flex items-center">
-          <div className={`w-1.5 md:w-2 self-stretch 
-            ${client.isVerified === true ? 'bg-green-500' : 
-              client.isVerified === "pending" ? 'bg-amber-500' : 
-              'bg-red-500'}`} 
-          />
-          <div className="flex-shrink-0 w-8 h-8 md:w-10 md:h-10 bg-primary/10 rounded-full flex items-center justify-center mx-2 md:mx-4 my-3 md:my-4">
-            <span className="text-xs md:text-sm font-medium text-primary">{index}</span>
+          <div className="flex-shrink-0 w-10 h-10 md:w-12 md:h-12 bg-primary/10 dark:bg-primary/20 rounded-full flex items-center justify-center mx-3 md:mx-4 my-3 md:my-4">
+            <span className="text-sm md:text-base font-medium text-primary">{index}</span>
           </div>
           
-          <div className="flex flex-grow flex-col md:flex-row md:items-center justify-between py-2 md:py-4 pr-2 md:pr-4">
+          <div className="flex flex-grow flex-col md:flex-row md:items-center justify-between py-3 md:py-4 pr-3 md:pr-4">
             <div>
               <div className="flex flex-wrap items-center gap-2 mb-1">
                 <h3 className="text-base md:text-lg font-semibold">{client.name}</h3>
@@ -63,7 +62,7 @@ const ClientCard = ({ client, index, onStatusUpdate }: ClientCardProps) => {
                   <Badge variant={client.isVerified === true ? "default" : 
                               client.isVerified === "pending" ? "outline" : 
                               "destructive"}
-                      className="ml-2">
+                      className="ml-2 shadow-sm">
                     {client.isVerified === true ? (
                       <span className="flex items-center gap-1">
                         <Check size={12} /> Verified
@@ -81,7 +80,7 @@ const ClientCard = ({ client, index, onStatusUpdate }: ClientCardProps) => {
                 )}
               </div>
               
-              <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-muted-foreground">
+              <div className="flex flex-wrap items-center gap-3 md:gap-4 text-xs md:text-sm text-muted-foreground">
                 <span className="flex items-center gap-1">
                   <span className="font-medium">FY:</span>
                   {client.financialYear}
@@ -96,9 +95,9 @@ const ClientCard = ({ client, index, onStatusUpdate }: ClientCardProps) => {
             
             <div className="mt-2 md:mt-0">
               {isUpdating ? (
-                <Button disabled size="sm" variant="outline" className="text-xs w-full md:w-auto">
-                  <Loader2 className="h-3 w-3 md:h-4 md:w-4 animate-spin" />
-                  <span className="ml-1">Updating...</span>
+                <Button disabled size="sm" variant="outline" className="text-xs w-full md:w-auto rounded-full">
+                  <Loader2 className="h-3 w-3 md:h-4 md:w-4 animate-spin mr-1" />
+                  <span>Updating...</span>
                 </Button>
               ) : (
                 <DropdownMenu>
@@ -106,7 +105,8 @@ const ClientCard = ({ client, index, onStatusUpdate }: ClientCardProps) => {
                     <Button size="sm" variant={client.isVerified === true ? "default" : 
                                              client.isVerified === "pending" ? "outline" : 
                                              "destructive"} 
-                            className="flex items-center gap-1 text-xs md:text-sm w-full md:w-auto">
+                            className="flex items-center gap-1 text-xs md:text-sm w-full md:w-auto rounded-full shadow-sm"
+                    >
                       {client.isVerified === true ? (
                         <>
                           <Check size={14} /> 

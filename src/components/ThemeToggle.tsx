@@ -37,14 +37,15 @@ const ThemeToggle = () => {
       variant="ghost" 
       size="icon" 
       onClick={toggleTheme}
-      className="fixed top-4 right-4 z-10 rounded-full bg-secondary border shadow-md"
+      className="fixed top-4 right-4 z-10 rounded-full bg-card border shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
       aria-label="Toggle theme"
     >
       {theme === "light" ? (
-        <Moon className="h-[1.2rem] w-[1.2rem] transition-all" />
+        <Moon className="h-5 w-5 transition-all" />
       ) : (
-        <Sun className="h-[1.2rem] w-[1.2rem] transition-all" />
+        <Sun className="h-5 w-5 transition-all text-yellow-400" />
       )}
+      <span className="sr-only">Toggle theme</span>
     </Button>
   );
 };
