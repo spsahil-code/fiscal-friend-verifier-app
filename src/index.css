@@ -176,6 +176,18 @@
     }
   }
   
+  /* Rainbow text animation */
+  .animate-rainbow {
+    animation: rainbow 8s linear infinite;
+    background-size: 200% 200%;
+  }
+  
+  @keyframes rainbow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  
   /* Mobile optimized text truncation */
   .truncate-1 {
     display: -webkit-box;
@@ -197,6 +209,14 @@
   .tap-highlight-none {
     -webkit-tap-highlight-color: transparent;
   }
+  
+  /* Mobile dialog improvements */
+  @media (max-width: 640px) {
+    .DialogContent {
+      width: 95vw !important;
+      padding: 1rem !important;
+    }
+  }
 }
 
 /* Media query helpers */
@@ -207,6 +227,22 @@
   
   html {
     font-size: 15px;
+  }
+  
+  /* Improve mobile form elements */
+  input, select, button {
+    font-size: 16px !important; /* Prevents zoom on iOS */
+  }
+  
+  /* Better spacing for mobile form elements */
+  .DialogFooter {
+    flex-direction: column !important;
+  }
+  
+  .DialogFooter > * {
+    width: 100% !important;
+    margin-left: 0 !important;
+    margin-top: 0.5rem !important;
   }
 }
 

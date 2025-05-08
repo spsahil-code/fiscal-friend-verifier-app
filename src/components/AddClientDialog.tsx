@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { Calendar as CalendarIcon, Check, X, Clock, Loader2, PlusCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -69,9 +69,9 @@ const AddClientDialog = ({ onAddClient }: AddClientDialogProps) => {
   const financialYears = generateFinancialYears();
 
   // Update assessment year when financial year changes
-  useState(() => {
+  useEffect(() => {
     setAssessmentYear(getAssessmentYear(financialYear));
-  });
+  }, [financialYear]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -123,19 +123,21 @@ const AddClientDialog = ({ onAddClient }: AddClientDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="gap-2 font-medium bg-gradient-to-r from-primary/90 to-primary hover:from-primary hover:to-primary/90">
+        <Button className="gap-2 font-medium bg-gradient-to-r from-primary/90 to-primary hover:from-primary hover:to-primary/90 shadow-lg">
           <PlusCircle size={18} />
           Add Client
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px] bg-card border-border rounded-xl dark:shadow-lg dark:shadow-primary/5">
+      <DialogContent className="sm:max-w-[500px] bg-card border-border rounded-xl dark:shadow-lg dark:shadow-primary/5 w-[95%] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">Add New Client</DialogTitle>
+          <DialogTitle className="text-xl md:text-2xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 dark:from-cyan-400 dark:via-primary dark:to-purple-400 bg-clip-text text-transparent">
+            Add New Client
+          </DialogTitle>
           <DialogDescription>
             Enter client details to add them to your verification system.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4 py-4">
+        <form onSubmit={handleSubmit} className="space-y-4 py-2 md:py-4">
           <div className="space-y-2">
             <Label htmlFor="name" className="text-foreground">Client Name</Label>
             <Input 
@@ -147,14 +149,14 @@ const AddClientDialog = ({ onAddClient }: AddClientDialogProps) => {
             />
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
             <div className="space-y-2">
               <Label htmlFor="financial-year" className="text-foreground">Financial Year</Label>
               <Select value={financialYear} onValueChange={(val) => {
                 setFinancialYear(val);
                 setAssessmentYear(getAssessmentYear(val));
               }}>
-                <SelectTrigger id="financial-year">
+                <SelectTrigger id="financial-year" className="text-sm">
                   <SelectValue placeholder="Select financial year" />
                 </SelectTrigger>
                 <SelectContent>
@@ -173,7 +175,7 @@ const AddClientDialog = ({ onAddClient }: AddClientDialogProps) => {
                 id="assessment-year" 
                 value={assessmentYear} 
                 readOnly 
-                className="bg-muted/30"
+                className="bg-muted/30 text-sm"
               />
             </div>
           </div>
@@ -188,7 +190,7 @@ const AddClientDialog = ({ onAddClient }: AddClientDialogProps) => {
                 else setVerificationStatus(false);
               }}
             >
-              <SelectTrigger id="verification-status">
+              <SelectTrigger id="verification-status" className="text-sm">
                 <SelectValue placeholder="Select verification status" />
               </SelectTrigger>
               <SelectContent>
@@ -221,7 +223,7 @@ const AddClientDialog = ({ onAddClient }: AddClientDialogProps) => {
                 <Button
                   variant="outline"
                   className={cn(
-                    "w-full justify-start text-left font-normal",
+                    "w-full justify-start text-left font-normal text-sm",
                     !date && "text-muted-foreground"
                   )}
                 >
@@ -235,16 +237,16 @@ const AddClientDialog = ({ onAddClient }: AddClientDialogProps) => {
                   selected={date}
                   onSelect={(newDate) => newDate && setDate(newDate)}
                   initialFocus
-                  className="p-3 pointer-events-auto"
+                  className="p-3 pointer-events-auto scale-90 md:scale-100"
                 />
               </PopoverContent>
             </Popover>
           </div>
           
-          <DialogFooter>
+          <DialogFooter className="pt-2 md:pt-4 pb-2 flex flex-col sm:flex-row">
             <Button 
               type="submit" 
-              className="w-full mt-4 bg-gradient-to-r from-primary/90 to-primary hover:from-primary hover:to-primary/90"
+              className="w-full bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 dark:from-cyan-400 dark:via-primary dark:to-purple-400 hover:opacity-90"
               disabled={isSubmitting}
             >
               {isSubmitting ? (

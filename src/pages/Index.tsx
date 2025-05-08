@@ -43,10 +43,12 @@ const Index = () => {
           <div className="inline-flex items-center justify-center p-2 md:p-3 bg-primary/10 dark:bg-primary/20 rounded-full mb-3 md:mb-4 ring-1 ring-primary/20 dark:ring-primary/30">
             <Users className="h-6 w-6 md:h-8 md:w-8 text-primary" />
           </div>
-          <h1 className="text-2xl md:text-4xl font-bold text-foreground dark:bg-gradient-to-br dark:from-white dark:to-primary/70 dark:bg-clip-text dark:text-transparent">
-            SPClient
+          <h1 className="text-3xl md:text-5xl font-bold relative">
+            <span className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 dark:from-cyan-400 dark:via-primary dark:to-purple-400 bg-clip-text text-transparent animate-pulse">SP</span>
+            <span className="bg-gradient-to-r from-blue-500 via-green-500 to-yellow-500 dark:from-purple-400 dark:via-pink-400 dark:to-amber-300 bg-clip-text text-transparent animate-pulse">Client</span>
+            <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-pink-500 to-blue-500 dark:from-cyan-400 dark:to-purple-400 rounded-full opacity-70"></div>
           </h1>
-          <p className="text-xs md:text-base text-muted-foreground mt-1 md:mt-2 max-w-2xl mx-auto">
+          <p className="text-xs md:text-base text-muted-foreground mt-3 md:mt-4 max-w-2xl mx-auto">
             Manage and track verification status for all your clients
           </p>
         </div>
