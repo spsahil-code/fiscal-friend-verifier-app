@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -97,6 +96,19 @@
   
   .card-hover {
     @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1 dark:hover:shadow-primary/5;
+  }
+
+  /* Enhanced dark mode styles */
+  .dark .dialog-glass {
+    @apply bg-gray-900/95 border-gray-800;
+  }
+
+  .dark .input-field {
+    @apply bg-gray-800/50 border-gray-700;
+  }
+
+  .dark .calendar-style {
+    @apply bg-gray-900 text-gray-200;
   }
 }
 

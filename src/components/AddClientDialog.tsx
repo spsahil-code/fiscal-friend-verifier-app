@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { format } from "date-fns";
-import { Calendar as CalendarIcon, Check, X, Clock, Loader2, PlusCircle } from "lucide-react";
+import { Calendar as CalendarIcon, Check, X, Clock, Loader2, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -123,17 +123,20 @@ const AddClientDialog = ({ onAddClient }: AddClientDialogProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="gap-2 font-medium bg-gradient-to-r from-primary/90 to-primary hover:from-primary hover:to-primary/90 shadow-lg">
-          <PlusCircle size={18} />
-          Add Client
+        <Button 
+          size="icon" 
+          className="rounded-full w-14 h-14 shadow-lg bg-gradient-to-r from-primary/90 to-primary hover:from-primary hover:to-primary/90 dark:from-primary/80 dark:to-primary dark:hover:from-primary dark:hover:to-primary/90 transition-all duration-300 hover:scale-105"
+          aria-label="Add Client"
+        >
+          <Plus size={24} />
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px] bg-card border-border rounded-xl dark:shadow-lg dark:shadow-primary/5 w-[95%] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-[500px] bg-card border-border rounded-xl dark:bg-gray-900/95 dark:border-gray-800 dark:shadow-lg dark:shadow-primary/5 w-[95%] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-xl md:text-2xl font-bold bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 dark:from-cyan-400 dark:via-primary dark:to-purple-400 bg-clip-text text-transparent">
             Add New Client
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="dark:text-gray-400">
             Enter client details to add them to your verification system.
           </DialogDescription>
         </DialogHeader>
@@ -145,7 +148,7 @@ const AddClientDialog = ({ onAddClient }: AddClientDialogProps) => {
               value={name} 
               onChange={(e) => setName(e.target.value)} 
               placeholder="Enter client name"
-              className="border-input focus-visible:ring-primary"
+              className="border-input dark:border-gray-700 dark:bg-gray-800/50 focus-visible:ring-primary"
             />
           </div>
 
@@ -156,10 +159,10 @@ const AddClientDialog = ({ onAddClient }: AddClientDialogProps) => {
                 setFinancialYear(val);
                 setAssessmentYear(getAssessmentYear(val));
               }}>
-                <SelectTrigger id="financial-year" className="text-sm">
+                <SelectTrigger id="financial-year" className="text-sm dark:border-gray-700 dark:bg-gray-800/50">
                   <SelectValue placeholder="Select financial year" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="dark:bg-gray-900 dark:border-gray-800">
                   {financialYears.map((year) => (
                     <SelectItem key={year} value={year}>
                       {year}
@@ -175,7 +178,7 @@ const AddClientDialog = ({ onAddClient }: AddClientDialogProps) => {
                 id="assessment-year" 
                 value={assessmentYear} 
                 readOnly 
-                className="bg-muted/30 text-sm"
+                className="bg-muted/30 text-sm dark:bg-gray-800/30 dark:border-gray-700"
               />
             </div>
           </div>
@@ -190,10 +193,10 @@ const AddClientDialog = ({ onAddClient }: AddClientDialogProps) => {
                 else setVerificationStatus(false);
               }}
             >
-              <SelectTrigger id="verification-status" className="text-sm">
+              <SelectTrigger id="verification-status" className="text-sm dark:border-gray-700 dark:bg-gray-800/50">
                 <SelectValue placeholder="Select verification status" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="dark:bg-gray-900 dark:border-gray-800">
                 <SelectItem value="verified">
                   <div className="flex items-center gap-2">
                     <Check className="h-4 w-4 text-green-500" />
@@ -223,7 +226,7 @@ const AddClientDialog = ({ onAddClient }: AddClientDialogProps) => {
                 <Button
                   variant="outline"
                   className={cn(
-                    "w-full justify-start text-left font-normal text-sm",
+                    "w-full justify-start text-left font-normal text-sm dark:bg-gray-800/50 dark:border-gray-700",
                     !date && "text-muted-foreground"
                   )}
                 >
@@ -231,13 +234,13 @@ const AddClientDialog = ({ onAddClient }: AddClientDialogProps) => {
                   {date ? format(date, "PPP") : <span>Pick a date</span>}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
+              <PopoverContent className="w-auto p-0 dark:bg-gray-900 dark:border-gray-800" align="start">
                 <Calendar
                   mode="single"
                   selected={date}
                   onSelect={(newDate) => newDate && setDate(newDate)}
                   initialFocus
-                  className="p-3 pointer-events-auto scale-90 md:scale-100"
+                  className="p-3 pointer-events-auto scale-90 md:scale-100 dark:bg-gray-900"
                 />
               </PopoverContent>
             </Popover>

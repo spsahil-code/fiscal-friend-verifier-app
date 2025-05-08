@@ -36,7 +36,7 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background to-secondary/30 dark:from-background dark:to-secondary/20 transition-all duration-500">
+    <div className="min-h-screen bg-gradient-to-br from-background to-secondary/30 dark:from-gray-950 dark:to-gray-900 transition-all duration-500">
       <ThemeToggle />
       <div className="container mx-auto py-4 md:py-12 px-3 md:px-4 max-w-7xl">
         <div className="text-center mb-6 md:mb-12 animate-in fade-in duration-700">
@@ -48,21 +48,21 @@ const Index = () => {
             <span className="bg-gradient-to-r from-blue-500 via-green-500 to-yellow-500 dark:from-purple-400 dark:via-pink-400 dark:to-amber-300 bg-clip-text text-transparent animate-pulse">Client</span>
             <div className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-16 h-1 bg-gradient-to-r from-pink-500 to-blue-500 dark:from-cyan-400 dark:to-purple-400 rounded-full opacity-70"></div>
           </h1>
-          <p className="text-xs md:text-base text-muted-foreground mt-3 md:mt-4 max-w-2xl mx-auto">
+          <p className="text-xs md:text-base text-muted-foreground dark:text-gray-400 mt-3 md:mt-4 max-w-2xl mx-auto">
             Manage and track verification status for all your clients
           </p>
         </div>
         
         <div className="grid grid-cols-1 gap-6 md:gap-8">          
           <div>
-            <div className="glass-effect rounded-xl shadow-lg dark:shadow-primary/5 animate-in slide-in-from-bottom-3 duration-700">
+            <div className="glass-effect rounded-xl shadow-lg dark:shadow-primary/5 animate-in slide-in-from-bottom-3 duration-700 dark:bg-gray-900/30 dark:backdrop-blur-xl dark:border-gray-800">
               {isLoading ? (
-                <div className="flex items-center justify-center h-40 md:h-64 flex-col gap-3 bg-card/50 dark:bg-card/30 rounded-xl">
+                <div className="flex items-center justify-center h-40 md:h-64 flex-col gap-3 bg-card/50 dark:bg-gray-900/40 rounded-xl">
                   <div className="relative">
                     <div className="w-8 h-8 md:w-12 md:h-12 rounded-full border-4 border-primary/30 border-t-primary animate-spin"></div>
                     <Loader2 className="h-5 w-5 md:h-8 md:w-8 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-primary animate-pulse" />
                   </div>
-                  <p className="text-sm md:text-base text-muted-foreground">Loading clients...</p>
+                  <p className="text-sm md:text-base text-muted-foreground dark:text-gray-400">Loading clients...</p>
                 </div>
               ) : (
                 <ClientList 
