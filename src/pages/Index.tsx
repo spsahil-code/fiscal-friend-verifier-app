@@ -106,7 +106,7 @@ const Index = () => {
             {/* Add Client Button (Circle) */}
             <div className="flex-shrink-0">
               <AddClientDialog onAddClient={handleAddClient}>
-                <Button className="bg-gradient-to-r from-primary to-primary/80 dark:from-primary/90 dark:to-primary/70 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center justify-center h-10 w-10 md:h-12 md:w-12">
+                <Button size="icon" className="bg-gradient-to-r from-primary to-primary/80 dark:from-primary/90 dark:to-primary/70 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center justify-center h-10 w-10 md:h-12 md:w-12">
                   <Plus className="h-5 w-5 md:h-6 md:w-6" />
                 </Button>
               </AddClientDialog>
@@ -119,25 +119,25 @@ const Index = () => {
               className="flex-grow ml-4"
             >
               <TabsList className="grid grid-cols-4 bg-secondary/50 dark:bg-secondary/20 p-1 md:p-1.5 rounded-full shadow-inner">
-                <TabsTrigger value="all" className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-green-200/90 dark:data-[state=active]:bg-green-900/30 data-[state=active]:shadow-md rounded-full transition-all duration-300 h-9 md:h-10">
+                <TabsTrigger value="all" className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-green-100/90 dark:data-[state=active]:bg-green-900/30 data-[state=active]:shadow-md rounded-full transition-all duration-300 h-9 md:h-10">
                   <Users size={isMobile ? 12 : 14} className={isMobile ? "h-3 w-3" : "h-4 w-4"} /> 
                   <span className={isMobile ? "hidden sm:inline" : ""}>All</span>
-                  <span className="text-xs rounded-full bg-green-300/80 dark:bg-green-700/40 px-1.5 py-0.5 ml-1">{clients.length}</span>
+                  <span className="text-xs rounded-full bg-green-200/80 dark:bg-green-800/40 px-1.5 py-0.5 ml-1">{clients.length}</span>
                 </TabsTrigger>
-                <TabsTrigger value="verified" className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-green-200/90 dark:data-[state=active]:bg-green-900/30 data-[state=active]:shadow-md rounded-full transition-all duration-300 h-9 md:h-10">
+                <TabsTrigger value="verified" className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-green-100/90 dark:data-[state=active]:bg-green-900/30 data-[state=active]:shadow-md rounded-full transition-all duration-300 h-9 md:h-10">
                   <Check size={isMobile ? 12 : 14} className={isMobile ? "h-3 w-3" : "h-4 w-4"} /> 
                   <span className={isMobile ? "hidden sm:inline" : ""}>Verified</span>
-                  <span className="text-xs rounded-full bg-green-300/80 dark:bg-green-700/40 px-1.5 py-0.5 ml-1">{verifiedCount}</span>
+                  <span className="text-xs rounded-full bg-green-200/80 dark:bg-green-800/40 px-1.5 py-0.5 ml-1">{verifiedCount}</span>
                 </TabsTrigger>
-                <TabsTrigger value="not-verified" className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-green-200/90 dark:data-[state=active]:bg-green-900/30 data-[state=active]:shadow-md rounded-full transition-all duration-300 h-9 md:h-10">
+                <TabsTrigger value="not-verified" className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-green-100/90 dark:data-[state=active]:bg-green-900/30 data-[state=active]:shadow-md rounded-full transition-all duration-300 h-9 md:h-10">
                   <X size={isMobile ? 12 : 14} className={isMobile ? "h-3 w-3" : "h-4 w-4"} /> 
                   <span className={isMobile ? "hidden sm:inline" : ""}>Not Ver.</span>
-                  <span className="text-xs rounded-full bg-green-300/80 dark:bg-green-700/40 px-1.5 py-0.5 ml-1">{notVerifiedCount}</span>
+                  <span className="text-xs rounded-full bg-green-200/80 dark:bg-green-800/40 px-1.5 py-0.5 ml-1">{notVerifiedCount}</span>
                 </TabsTrigger>
-                <TabsTrigger value="pending" className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-green-200/90 dark:data-[state=active]:bg-green-900/30 data-[state=active]:shadow-md rounded-full transition-all duration-300 h-9 md:h-10">
+                <TabsTrigger value="pending" className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-green-100/90 dark:data-[state=active]:bg-green-900/30 data-[state=active]:shadow-md rounded-full transition-all duration-300 h-9 md:h-10">
                   <Clock size={isMobile ? 12 : 14} className={isMobile ? "h-3 w-3" : "h-4 w-4"} /> 
                   <span className={isMobile ? "hidden sm:inline" : ""}>Pending</span>
-                  <span className="text-xs rounded-full bg-green-300/80 dark:bg-green-700/40 px-1.5 py-0.5 ml-1">{pendingCount}</span>
+                  <span className="text-xs rounded-full bg-green-200/80 dark:bg-green-800/40 px-1.5 py-0.5 ml-1">{pendingCount}</span>
                 </TabsTrigger>
               </TabsList>
             </Tabs>

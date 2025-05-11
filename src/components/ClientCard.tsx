@@ -43,34 +43,34 @@ const ClientCard = ({ client, index, onStatusUpdate }: ClientCardProps) => {
 
   const statusColors = {
     true: {
-      bg: 'bg-green-500/20 dark:bg-green-500/30',
-      border: 'border-green-500 dark:border-green-400',
+      bg: 'bg-green-500/10 dark:bg-green-500/20',
+      border: 'border-green-500/30 dark:border-green-400/30',
       text: 'text-green-600 dark:text-green-400',
-      icon: 'text-white',
-      iconBg: 'bg-green-500',
-      badge: 'bg-green-600 hover:bg-green-700',
-      badgeBorder: 'border-green-700/30',
-      hoverBg: 'hover:bg-green-50 dark:hover:bg-green-900/20'
+      icon: 'text-green-500 dark:text-green-400',
+      iconBg: 'bg-transparent',
+      badge: 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300',
+      badgeBorder: 'border-green-200/50 dark:border-green-700/30',
+      hoverBg: 'hover:bg-green-50 dark:hover:bg-green-900/10'
     },
     pending: {
-      bg: 'bg-amber-500/20 dark:bg-amber-500/30',
-      border: 'border-amber-500 dark:border-amber-400',
+      bg: 'bg-amber-500/10 dark:bg-amber-500/20',
+      border: 'border-amber-500/30 dark:border-amber-400/30',
       text: 'text-amber-600 dark:text-amber-400',
-      icon: 'text-white',
-      iconBg: 'bg-amber-500',
-      badge: 'bg-amber-500/90 hover:bg-amber-600',
-      badgeBorder: 'border-amber-600/30',
-      hoverBg: 'hover:bg-amber-50 dark:hover:bg-amber-900/20'
+      icon: 'text-amber-500 dark:text-amber-400',
+      iconBg: 'bg-transparent',
+      badge: 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300',
+      badgeBorder: 'border-amber-200/50 dark:border-amber-700/30',
+      hoverBg: 'hover:bg-amber-50 dark:hover:bg-amber-900/10'
     },
     false: {
-      bg: 'bg-red-500/20 dark:bg-red-500/30',
-      border: 'border-red-500 dark:border-red-400',
+      bg: 'bg-red-500/10 dark:bg-red-500/20',
+      border: 'border-red-500/30 dark:border-red-400/30',
       text: 'text-red-600 dark:text-red-400',
-      icon: 'text-white',
-      iconBg: 'bg-red-500',
-      badge: 'bg-red-500/90 hover:bg-red-600',
-      badgeBorder: 'border-red-600/30',
-      hoverBg: 'hover:bg-red-50 dark:hover:bg-red-900/20'
+      icon: 'text-red-500 dark:text-red-400',
+      iconBg: 'bg-transparent',
+      badge: 'bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300',
+      badgeBorder: 'border-red-200/50 dark:border-red-700/30',
+      hoverBg: 'hover:bg-red-50 dark:hover:bg-red-900/10'
     }
   };
 
@@ -84,26 +84,18 @@ const ClientCard = ({ client, index, onStatusUpdate }: ClientCardProps) => {
       border border-primary/5 hover:border-primary/20 dark:border-primary/10 hover:dark:border-primary/20
       ${colors.hoverBg} shadow-sm hover:shadow-md relative`}
     >
-      <div className="absolute left-0 top-0 bottom-0 w-1.5 ${colors.border}"></div>
+      <div className="absolute left-0 top-0 bottom-0 w-1 ${colors.border}"></div>
       <CardContent className="p-0">
         <div className="flex items-center p-3 md:p-4">
-          <div className={`flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center mr-4 
-            ${colors.bg} transition-transform group-hover:scale-105 duration-300`}
+          <div className={`flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center mr-3 md:mr-4 
+            ${colors.bg} border ${colors.border} transition-transform group-hover:scale-105 duration-300`}
           >
             {client.isVerified === true ? (
-              <div className={`${colors.iconBg} rounded-full p-2 shadow-md`}>
-                <Check className="h-5 w-5 md:h-6 md:w-6 ${colors.icon}" />
-              </div>
+              <Check className={`h-5 w-5 md:h-6 md:w-6 ${colors.icon}`} />
+            ) : client.isVerified === "pending" ? (
+              <Clock className={`h-5 w-5 md:h-6 md:w-6 ${colors.icon}`} />
             ) : (
-              client.isVerified === "pending" ? (
-                <div className={`${colors.iconBg} rounded-full p-2 shadow-md`}>
-                  <Clock className="h-5 w-5 md:h-6 md:w-6 ${colors.icon}" />
-                </div>
-              ) : (
-                <div className={`${colors.iconBg} rounded-full p-2 shadow-md`}>
-                  <X className="h-5 w-5 md:h-6 md:w-6 ${colors.icon}" />
-                </div>
-              )
+              <X className={`h-5 w-5 md:h-6 md:w-6 ${colors.icon}`} />
             )}
           </div>
           
@@ -116,20 +108,9 @@ const ClientCard = ({ client, index, onStatusUpdate }: ClientCardProps) => {
                 
                 {!isMobile && (
                   <Badge variant="outline"
-                         className={`ml-2 px-2 py-0.5 shadow-sm ${colors.badge} ${colors.badgeBorder} text-white`}>
-                    {client.isVerified === true ? (
-                      <span className="flex items-center gap-1">
-                        <Check size={12} /> Verified
-                      </span>
-                    ) : client.isVerified === "pending" ? (
-                      <span className="flex items-center gap-1">
-                        <Clock size={12} /> Pending
-                      </span>
-                    ) : (
-                      <span className="flex items-center gap-1">
-                        <X size={12} /> Not Verified
-                      </span>
-                    )}
+                         className={`ml-2 px-2 py-0.5 text-xs ${colors.badge} border ${colors.badgeBorder}`}>
+                    {client.isVerified === true ? "Verified" : 
+                     client.isVerified === "pending" ? "Pending" : "Not Verified"}
                   </Badge>
                 )}
               </div>
@@ -157,29 +138,27 @@ const ClientCard = ({ client, index, onStatusUpdate }: ClientCardProps) => {
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button size="sm" 
-                            variant={client.isVerified === true ? "default" : 
-                                   client.isVerified === "pending" ? "outline" : 
-                                   "destructive"} 
+                            variant="outline"
                             className={`flex items-center gap-1 text-xs md:text-sm md:w-auto rounded-full shadow-sm
-                                       ${client.isVerified === true ? colors.badge : ''}`}
+                                      border ${colors.border} ${colors.badge}`}
                     >
                       {client.isVerified === true ? (
-                        <>
-                          <Check size={14} /> 
-                          <span className="ml-1">Verified</span>
-                        </>
+                        <span className="flex items-center">
+                          <Check size={14} className="mr-1" /> 
+                          Verified
+                        </span>
                       ) : client.isVerified === "pending" ? (
-                        <>
-                          <Clock size={14} /> 
-                          <span className="ml-1">Pending</span>
-                        </>
+                        <span className="flex items-center">
+                          <Clock size={14} className="mr-1" /> 
+                          Pending
+                        </span>
                       ) : (
-                        <>
-                          <X size={14} /> 
-                          <span className="ml-1">Not Verified</span>
-                        </>
+                        <span className="flex items-center">
+                          <X size={14} className="mr-1" /> 
+                          Not Verified
+                        </span>
                       )}
-                      <MoreVertical size={14} className="ml-1 opacity-70" />
+                      <MoreVertical size={14} className="ml-1 opacity-60" />
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align={isMobile ? "center" : "end"} className="w-52 border border-primary/10 dark:border-primary/20 shadow-lg animate-in fade-in-0 zoom-in-95 duration-100">
@@ -188,7 +167,7 @@ const ClientCard = ({ client, index, onStatusUpdate }: ClientCardProps) => {
                       disabled={client.isVerified === true}
                       className="flex items-center gap-2 cursor-pointer"
                     >
-                      <div className="bg-green-500/20 dark:bg-green-500/30 p-1 rounded-full">
+                      <div className={`${colors.bg} p-1 rounded-full`}>
                         <Check size={14} className="text-green-600 dark:text-green-400" />
                       </div>
                       <span>Mark as Verified</span>
@@ -198,7 +177,7 @@ const ClientCard = ({ client, index, onStatusUpdate }: ClientCardProps) => {
                       disabled={client.isVerified === "pending"}
                       className="flex items-center gap-2 cursor-pointer"
                     >
-                      <div className="bg-amber-500/20 dark:bg-amber-500/30 p-1 rounded-full">
+                      <div className="bg-amber-500/10 dark:bg-amber-500/20 p-1 rounded-full">
                         <Clock size={14} className="text-amber-600 dark:text-amber-400" />
                       </div>
                       <span>Mark as Pending</span>
@@ -208,7 +187,7 @@ const ClientCard = ({ client, index, onStatusUpdate }: ClientCardProps) => {
                       disabled={client.isVerified === false}
                       className="flex items-center gap-2 cursor-pointer"
                     >
-                      <div className="bg-red-500/20 dark:bg-red-500/30 p-1 rounded-full">
+                      <div className="bg-red-500/10 dark:bg-red-500/20 p-1 rounded-full">
                         <X size={14} className="text-red-600 dark:text-red-400" />
                       </div>
                       <span>Mark as Not Verified</span>
