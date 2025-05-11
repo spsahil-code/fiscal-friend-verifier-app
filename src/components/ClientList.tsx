@@ -40,12 +40,12 @@ const ClientList = ({ clients, onStatusUpdate, activeTab = "all" }: ClientListPr
           <div className="bg-green-50 dark:bg-green-900/20 p-2 rounded-full">
             <ListOrdered className="h-4 w-4 md:h-5 md:w-5 text-green-600 dark:text-green-400" />
           </div>
-          <Badge variant="outline" className="py-1 px-3 bg-green-50/80 dark:bg-green-900/20 border-green-200/50 dark:border-green-800/50 text-green-700 dark:text-green-400 rounded-full">
+          <Badge variant="outline" className="py-1.5 px-4 bg-green-50/80 dark:bg-green-900/20 border-green-200/50 dark:border-green-800/50 text-green-700 dark:text-green-400 rounded-full">
             <h2 className="text-lg md:text-xl font-bold">Client List</h2>
           </Badge>
         </div>
         <div className="flex items-center gap-2">
-          <Badge variant="outline" className="py-1 px-3 bg-green-50/80 dark:bg-green-900/20 border-green-200/50 dark:border-green-800/50 rounded-full">
+          <Badge variant="outline" className="py-1.5 px-4 bg-green-50/80 dark:bg-green-900/20 border-green-200/50 dark:border-green-800/50 rounded-full">
             <span className="text-xs md:text-sm text-green-600 dark:text-green-400">Total:</span>
             <span className="ml-1 font-medium text-green-700 dark:text-green-300">{clients.length}</span>
           </Badge>

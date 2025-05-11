@@ -63,7 +63,7 @@ const Index = () => {
       <div className="absolute bottom-20 left-20 w-[200px] h-[200px] rounded-full bg-secondary/10 dark:bg-secondary/20 blur-[100px] animate-pulse pointer-events-none"></div>
       
       <ThemeToggle />
-      <div className="container mx-auto py-6 md:py-16 px-4 md:px-6 max-w-7xl relative z-10 pb-24">
+      <div className="container mx-auto py-6 md:py-16 px-4 md:px-6 max-w-7xl relative z-10 pb-floating-bar">
         <div className="text-center mb-8 md:mb-14 animate-in fade-in duration-700">
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight relative inline-block uppercase">
             <span className="bg-gradient-to-br from-pink-500 via-purple-500 to-blue-500 dark:from-cyan-400 dark:via-primary dark:to-purple-400 bg-clip-text text-transparent animate-rainbow">SP</span>
@@ -99,42 +99,58 @@ const Index = () => {
         </div>
       </div>
       
-      {/* Floating Bottom Bar - Updated to pill shape */}
+      {/* Floating Bottom Bar - Updated to modern pill shape */}
       <div className="fixed bottom-0 left-0 right-0 z-50 px-4 pb-4">
         <div className="bg-background/80 dark:bg-gray-900/90 backdrop-blur-lg border border-primary/10 dark:border-primary/20 shadow-lg py-3 px-4 rounded-full floating-bar-glow float-up">
           <div className="container mx-auto max-w-3xl flex justify-between items-center">
-            {/* Add Client Button (Circle) */}
+            {/* Add Client Button (Modern Circle with Outline) */}
             <div className="flex-shrink-0">
               <AddClientDialog onAddClient={handleAddClient}>
-                <Button size="icon" className="bg-gradient-to-r from-primary to-primary/80 dark:from-primary/90 dark:to-primary/70 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center justify-center h-10 w-10 md:h-12 md:w-12">
+                <Button 
+                  size="icon" 
+                  className="relative bg-gradient-to-r from-primary to-primary/80 dark:from-primary/90 dark:to-primary/70 text-white p-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105 flex items-center justify-center h-10 w-10 md:h-12 md:w-12 pill-glow"
+                >
                   <Plus className="h-5 w-5 md:h-6 md:w-6" />
+                  <div className="absolute inset-0 rounded-full border-2 border-primary/40 dark:border-primary/30 animate-pulse"></div>
                 </Button>
               </AddClientDialog>
             </div>
             
-            {/* Filter Tabs - With pill shape */}
+            {/* Filter Tabs - With modern pill shape */}
             <Tabs 
               value={activeFilter} 
               onValueChange={handleFilterChange}
               className="flex-grow ml-4"
             >
               <TabsList className="grid grid-cols-4 bg-secondary/50 dark:bg-secondary/20 p-1 md:p-1.5 rounded-full shadow-inner">
-                <TabsTrigger value="all" className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-green-100/90 dark:data-[state=active]:bg-green-900/30 data-[state=active]:shadow-md rounded-full transition-all duration-300 h-9 md:h-10">
+                <TabsTrigger 
+                  value="all" 
+                  className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-green-100/90 dark:data-[state=active]:bg-green-900/30 data-[state=active]:shadow-md rounded-full transition-all duration-300 h-9 md:h-10 pill-hover"
+                >
                   <Users size={isMobile ? 12 : 14} className={isMobile ? "h-3 w-3" : "h-4 w-4"} /> 
                   <span className={isMobile ? "hidden sm:inline" : ""}>All</span>
                   <span className="text-xs rounded-full bg-green-200/80 dark:bg-green-800/40 px-1.5 py-0.5 ml-1">{clients.length}</span>
                 </TabsTrigger>
-                <TabsTrigger value="verified" className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-green-100/90 dark:data-[state=active]:bg-green-900/30 data-[state=active]:shadow-md rounded-full transition-all duration-300 h-9 md:h-10">
+                <TabsTrigger 
+                  value="verified" 
+                  className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-green-100/90 dark:data-[state=active]:bg-green-900/30 data-[state=active]:shadow-md rounded-full transition-all duration-300 h-9 md:h-10 pill-hover"
+                >
                   <Check size={isMobile ? 12 : 14} className={isMobile ? "h-3 w-3" : "h-4 w-4"} /> 
                   <span className={isMobile ? "hidden sm:inline" : ""}>Verified</span>
                   <span className="text-xs rounded-full bg-green-200/80 dark:bg-green-800/40 px-1.5 py-0.5 ml-1">{verifiedCount}</span>
                 </TabsTrigger>
-                <TabsTrigger value="not-verified" className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-green-100/90 dark:data-[state=active]:bg-green-900/30 data-[state=active]:shadow-md rounded-full transition-all duration-300 h-9 md:h-10">
+                <TabsTrigger 
+                  value="not-verified" 
+                  className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-green-100/90 dark:data-[state=active]:bg-green-900/30 data-[state=active]:shadow-md rounded-full transition-all duration-300 h-9 md:h-10 pill-hover"
+                >
                   <X size={isMobile ? 12 : 14} className={isMobile ? "h-3 w-3" : "h-4 w-4"} /> 
                   <span className={isMobile ? "hidden sm:inline" : ""}>Not Ver.</span>
                   <span className="text-xs rounded-full bg-green-200/80 dark:bg-green-800/40 px-1.5 py-0.5 ml-1">{notVerifiedCount}</span>
                 </TabsTrigger>
-                <TabsTrigger value="pending" className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-green-100/90 dark:data-[state=active]:bg-green-900/30 data-[state=active]:shadow-md rounded-full transition-all duration-300 h-9 md:h-10">
+                <TabsTrigger 
+                  value="pending" 
+                  className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-green-100/90 dark:data-[state=active]:bg-green-900/30 data-[state=active]:shadow-md rounded-full transition-all duration-300 h-9 md:h-10 pill-hover"
+                >
                   <Clock size={isMobile ? 12 : 14} className={isMobile ? "h-3 w-3" : "h-4 w-4"} /> 
                   <span className={isMobile ? "hidden sm:inline" : ""}>Pending</span>
                   <span className="text-xs rounded-full bg-green-200/80 dark:bg-green-800/40 px-1.5 py-0.5 ml-1">{pendingCount}</span>
