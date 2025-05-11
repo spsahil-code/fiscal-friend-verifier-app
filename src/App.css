@@ -62,11 +62,47 @@
 
 /* Floating bar glow effect */
 .floating-bar-glow {
-  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.05), 0 5px 15px rgba(0, 0, 0, 0.05);
 }
 
 .dark .floating-bar-glow {
-  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Pill shape animation */
+.pill-hover {
+  transition: all 0.3s ease;
+}
+
+.pill-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.dark .pill-hover:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Pill button glow effect */
+.pill-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.pill-glow::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.pill-glow:hover::after {
+  opacity: 1;
 }
 
 /* Remove any legacy styles that might interfere with our new design */
