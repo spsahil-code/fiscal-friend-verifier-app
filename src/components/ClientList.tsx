@@ -1,29 +1,20 @@
 
-import { useState } from "react";
 import { Client } from "@/types/client";
 import ClientCard from "./ClientCard";
-import { ListOrdered, Check, X, Clock, Users, Filter } from "lucide-react";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { ListOrdered, Check, X, Clock, Users } from "lucide-react";
+import { TabsContent } from "@/components/ui/tabs";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Badge } from "@/components/ui/badge";
 
 interface ClientListProps {
   clients: Client[];
   onStatusUpdate: (id: string, newStatus: boolean | "pending") => void;
+  activeTab?: "all" | "verified" | "not-verified" | "pending";
 }
 
-const ClientList = ({ clients, onStatusUpdate }: ClientListProps) => {
-  const [activeTab, setActiveTab] = useState<"all" | "verified" | "not-verified" | "pending">("all");
+const ClientList = ({ clients, onStatusUpdate, activeTab = "all" }: ClientListProps) => {
   const isMobile = useIsMobile();
   
-  const filteredClients = clients.filter(client => {
-    if (activeTab === "all") return true;
-    if (activeTab === "verified") return client.isVerified === true;
-    if (activeTab === "not-verified") return client.isVerified === false;
-    if (activeTab === "pending") return client.isVerified === "pending";
-    return true;
-  });
-
   const verifiedCount = clients.filter(c => c.isVerified === true).length;
   const notVerifiedCount = clients.filter(c => c.isVerified === false).length;
   const pendingCount = clients.filter(c => c.isVerified === "pending").length;
@@ -92,75 +83,17 @@ const ClientList = ({ clients, onStatusUpdate }: ClientListProps) => {
         </div>
       </div>
       
-      {/* Tabs - Full width with enhanced design */}
-      <Tabs defaultValue="all" className="w-full" onValueChange={(value) => setActiveTab(value as any)}>
-        <TabsList className="grid grid-cols-4 mb-5 w-full bg-secondary/50 dark:bg-secondary/20 p-1 md:p-1.5 rounded-lg shadow-inner">
-          <TabsTrigger value="all" className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-background/80 dark:data-[state=active]:bg-primary/10 data-[state=active]:shadow-md rounded-md transition-all duration-300 h-9 md:h-10">
-            <ListOrdered size={isMobile ? 12 : 14} className={isMobile ? "h-3 w-3" : "h-4 w-4"} /> 
-            <span className={isMobile ? "hidden sm:inline" : ""}>All</span>
-            <span className="text-xs rounded-full bg-background/50 dark:bg-primary/20 px-1.5 py-0.5">{clients.length}</span>
-          </TabsTrigger>
-          <TabsTrigger value="verified" className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-background/80 dark:data-[state=active]:bg-primary/10 data-[state=active]:shadow-md rounded-md transition-all duration-300 h-9 md:h-10">
-            <Check size={isMobile ? 12 : 14} className={isMobile ? "h-3 w-3" : "h-4 w-4"} /> 
-            <span className={isMobile ? "hidden sm:inline" : ""}>Verified</span>
-            <span className="text-xs rounded-full bg-background/50 dark:bg-primary/20 px-1.5 py-0.5">{verifiedCount}</span>
-          </TabsTrigger>
-          <TabsTrigger value="not-verified" className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-background/80 dark:data-[state=active]:bg-primary/10 data-[state=active]:shadow-md rounded-md transition-all duration-300 h-9 md:h-10">
-            <X size={isMobile ? 12 : 14} className={isMobile ? "h-3 w-3" : "h-4 w-4"} /> 
-            <span className={isMobile ? "hidden sm:inline" : ""}>Not Ver.</span>
-            <span className="text-xs rounded-full bg-background/50 dark:bg-primary/20 px-1.5 py-0.5">{notVerifiedCount}</span>
-          </TabsTrigger>
-          <TabsTrigger value="pending" className="text-xs md:text-sm flex items-center gap-1.5 data-[state=active]:bg-background/80 dark:data-[state=active]:bg-primary/10 data-[state=active]:shadow-md rounded-md transition-all duration-300 h-9 md:h-10">
-            <Clock size={isMobile ? 12 : 14} className={isMobile ? "h-3 w-3" : "h-4 w-4"} /> 
-            <span className={isMobile ? "hidden sm:inline" : ""}>Pending</span>
-            <span className="text-xs rounded-full bg-background/50 dark:bg-primary/20 px-1.5 py-0.5">{pendingCount}</span>
-          </TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="all" className="space-y-3 mt-4 animate-in fade-in-0 duration-500">
-          {filteredClients.map((client, index) => (
-            <ClientCard 
-              key={client.id} 
-              client={client} 
-              index={index + 1}
-              onStatusUpdate={onStatusUpdate} 
-            />
-          ))}
-        </TabsContent>
-        
-        <TabsContent value="verified" className="space-y-3 mt-4 animate-in fade-in-0 duration-500">
-          {filteredClients.map((client, index) => (
-            <ClientCard 
-              key={client.id} 
-              client={client} 
-              index={index + 1}
-              onStatusUpdate={onStatusUpdate} 
-            />
-          ))}
-        </TabsContent>
-        
-        <TabsContent value="not-verified" className="space-y-3 mt-4 animate-in fade-in-0 duration-500">
-          {filteredClients.map((client, index) => (
-            <ClientCard 
-              key={client.id} 
-              client={client} 
-              index={index + 1}
-              onStatusUpdate={onStatusUpdate} 
-            />
-          ))}
-        </TabsContent>
-        
-        <TabsContent value="pending" className="space-y-3 mt-4 animate-in fade-in-0 duration-500">
-          {filteredClients.map((client, index) => (
-            <ClientCard 
-              key={client.id} 
-              client={client} 
-              index={index + 1}
-              onStatusUpdate={onStatusUpdate} 
-            />
-          ))}
-        </TabsContent>
-      </Tabs>
+      {/* Client list with no tabs here, just render directly */}
+      <div className="space-y-3 mt-4 animate-in fade-in-0 duration-500">
+        {clients.map((client, index) => (
+          <ClientCard 
+            key={client.id} 
+            client={client} 
+            index={index + 1}
+            onStatusUpdate={onStatusUpdate} 
+          />
+        ))}
+      </div>
     </div>
   );
 };
