@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -77,6 +78,7 @@
   body {
     @apply bg-background text-foreground transition-colors duration-300;
     -webkit-tap-highlight-color: transparent;
+    font-feature-settings: "rlig" 1, "calt" 1;
   }
   
   /* Improve touch targets on mobile */
@@ -92,6 +94,10 @@
   
   .glass-effect {
     @apply backdrop-blur-sm bg-white/70 dark:bg-black/30 border border-white/20 dark:border-white/10 shadow-md dark:shadow-lg;
+  }
+  
+  .glass-card {
+    @apply backdrop-blur-md bg-white/80 dark:bg-gray-900/50 border border-white/30 dark:border-white/10;
   }
   
   .card-hover {
@@ -190,14 +196,55 @@
   
   /* Rainbow text animation */
   .animate-rainbow {
+    background-size: 400% 100%;
     animation: rainbow 8s linear infinite;
-    background-size: 200% 200%;
   }
   
   @keyframes rainbow {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
+  }
+  
+  /* Shimmer effect */
+  .animate-shimmer {
+    background-image: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0) 0,
+      rgba(255, 255, 255, 0.2) 20%,
+      rgba(255, 255, 255, 0.5) 60%,
+      rgba(255, 255, 255, 0)
+    );
+    background-size: 200% 100%;
+    background-position: -100%;
+    animation: shimmer 2s infinite;
+  }
+
+  @keyframes shimmer {
+    to {
+      background-position: 200%;
+    }
+  }
+  
+  /* Floating animation */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+  }
+  
+  /* Subtle pulse animation */
+  .animate-subtle-pulse {
+    animation: subtle-pulse 3s ease-in-out infinite;
+  }
+  
+  @keyframes subtle-pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
   }
   
   /* Mobile optimized text truncation */
@@ -228,6 +275,19 @@
       width: 95vw !important;
       padding: 1rem !important;
     }
+  }
+  
+  /* Glassmorphism layers */
+  .glassmorphism {
+    @apply backdrop-blur-md bg-white/70 dark:bg-black/40 border border-white/20 dark:border-white/10 shadow-lg;
+  }
+  
+  .glassmorphism-stronger {
+    @apply backdrop-blur-lg bg-white/80 dark:bg-black/60 border border-white/30 dark:border-white/20 shadow-xl;
+  }
+  
+  .glassmorphism-light {
+    @apply backdrop-blur-sm bg-white/50 dark:bg-black/30 border border-white/10 dark:border-white/5 shadow-md;
   }
 }
 
@@ -263,4 +323,12 @@
   .min-h-screen {
     min-height: -webkit-fill-available;
   }
+}
+
+/* Remove App.css styles that are no longer needed */
+#root {
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  text-align: left;
 }

@@ -5,8 +5,11 @@ import { Button } from "@/components/ui/button";
 
 const ThemeToggle = () => {
   const [theme, setTheme] = useState<"light" | "dark">("light");
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
+    
     // Check if user has dark mode preference or previously selected theme
     const savedTheme = localStorage.getItem("theme") as "light" | "dark" | null;
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -32,19 +35,28 @@ const ThemeToggle = () => {
     applyTheme(newTheme);
   };
 
+  if (!mounted) return null;
+
   return (
     <Button 
-      variant="ghost" 
+      variant="outline" 
       size="icon" 
       onClick={toggleTheme}
-      className="fixed top-4 right-4 z-10 rounded-full bg-card/80 dark:bg-gray-800/50 backdrop-blur-sm border dark:border-gray-700 shadow-md hover:shadow-lg transition-all duration-300 hover:scale-105"
+      className="fixed top-4 right-4 z-40 rounded-full bg-background/80 backdrop-blur-md border border-primary/10 shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110 dark:bg-gray-800/60 dark:border-primary/20"
       aria-label="Toggle theme"
     >
-      {theme === "light" ? (
-        <Moon className="h-5 w-5 transition-all" />
-      ) : (
-        <Sun className="h-5 w-5 transition-all text-yellow-400" />
-      )}
+      <div className="relative w-5 h-5">
+        {theme === "light" ? (
+          <Moon className="h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 absolute top-0 left-0" />
+        ) : (
+          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:rotate-90 dark:scale-0 absolute top-0 left-0 text-yellow-400" />
+        )}
+        {theme === "dark" ? (
+          <Moon className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:rotate-0 dark:scale-100 absolute top-0 left-0" />
+        ) : (
+          <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:rotate-90 dark:scale-0 absolute top-0 left-0 text-yellow-500" />
+        )}
+      </div>
       <span className="sr-only">Toggle theme</span>
     </Button>
   );

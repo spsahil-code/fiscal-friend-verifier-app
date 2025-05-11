@@ -1,6 +1,6 @@
 
 import { format } from "date-fns";
-import { Check, X, Clock, Calendar } from "lucide-react";
+import { Check, X, Clock, Calendar, MoreVertical } from "lucide-react";
 import { Client } from "@/types/client";
 import { 
   Card, 
@@ -41,44 +41,82 @@ const ClientCard = ({ client, index, onStatusUpdate }: ClientCardProps) => {
     }
   };
 
+  const statusColors = {
+    true: {
+      bg: 'bg-green-500/20 dark:bg-green-500/30',
+      border: 'border-green-500 dark:border-green-400',
+      text: 'text-green-600 dark:text-green-400',
+      icon: 'text-white',
+      iconBg: 'bg-green-500',
+      badge: 'bg-green-600 hover:bg-green-700',
+      badgeBorder: 'border-green-700/30',
+      hoverBg: 'hover:bg-green-50 dark:hover:bg-green-900/20'
+    },
+    pending: {
+      bg: 'bg-amber-500/20 dark:bg-amber-500/30',
+      border: 'border-amber-500 dark:border-amber-400',
+      text: 'text-amber-600 dark:text-amber-400',
+      icon: 'text-white',
+      iconBg: 'bg-amber-500',
+      badge: 'bg-amber-500/90 hover:bg-amber-600',
+      badgeBorder: 'border-amber-600/30',
+      hoverBg: 'hover:bg-amber-50 dark:hover:bg-amber-900/20'
+    },
+    false: {
+      bg: 'bg-red-500/20 dark:bg-red-500/30',
+      border: 'border-red-500 dark:border-red-400',
+      text: 'text-red-600 dark:text-red-400',
+      icon: 'text-white',
+      iconBg: 'bg-red-500',
+      badge: 'bg-red-500/90 hover:bg-red-600',
+      badgeBorder: 'border-red-600/30',
+      hoverBg: 'hover:bg-red-50 dark:hover:bg-red-900/20'
+    }
+  };
+
+  const currentStatus = client.isVerified === true ? 'true' : 
+                        client.isVerified === 'pending' ? 'pending' : 'false';
+  
+  const colors = statusColors[currentStatus];
+
   return (
-    <Card className={`w-full overflow-hidden hover:shadow-md transition-all duration-300 group animate-in fade-in-50 border-l-4 dark:bg-secondary/10 backdrop-blur-sm
-      ${client.isVerified === true ? 'border-l-green-500 dark:border-l-green-400' : 
-      client.isVerified === 'pending' ? 'border-l-amber-500 dark:border-l-amber-400' : 
-      'border-l-red-500 dark:border-l-red-400'}`}
+    <Card className={`w-full overflow-hidden transition-all duration-300 group animate-in fade-in-50 backdrop-blur-sm
+      border border-primary/5 hover:border-primary/20 dark:border-primary/10 hover:dark:border-primary/20
+      ${colors.hoverBg} shadow-sm hover:shadow-md relative`}
     >
+      <div className="absolute left-0 top-0 bottom-0 w-1.5 ${colors.border}"></div>
       <CardContent className="p-0">
-        <div className="flex items-center">
-          <div className={`flex-shrink-0 w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center mx-3 md:mx-4 my-3 md:my-4 
-            ${client.isVerified === true ? 'bg-green-500/20 dark:bg-green-500/30' : 
-            client.isVerified === 'pending' ? 'bg-amber-500/20 dark:bg-amber-500/30' : 
-            'bg-red-500/20 dark:bg-red-500/30'}`}
+        <div className="flex items-center p-3 md:p-4">
+          <div className={`flex-shrink-0 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center mr-4 
+            ${colors.bg} transition-transform group-hover:scale-105 duration-300`}
           >
             {client.isVerified === true ? (
-              <div className="bg-green-500 text-white rounded-full p-1">
-                <Check className="h-5 w-5 md:h-5 md:w-5" />
+              <div className={`${colors.iconBg} rounded-full p-2 shadow-md`}>
+                <Check className="h-5 w-5 md:h-6 md:w-6 ${colors.icon}" />
               </div>
             ) : (
-              <span className="text-sm md:text-base font-medium 
-                ${client.isVerified === 'pending' ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400'}"
-              >
-                {index}
-              </span>
+              client.isVerified === "pending" ? (
+                <div className={`${colors.iconBg} rounded-full p-2 shadow-md`}>
+                  <Clock className="h-5 w-5 md:h-6 md:w-6 ${colors.icon}" />
+                </div>
+              ) : (
+                <div className={`${colors.iconBg} rounded-full p-2 shadow-md`}>
+                  <X className="h-5 w-5 md:h-6 md:w-6 ${colors.icon}" />
+                </div>
+              )
             )}
           </div>
           
-          <div className="flex flex-grow flex-col md:flex-row md:items-center justify-between py-2 md:py-4 pr-2 md:pr-4">
+          <div className="flex flex-grow flex-col md:flex-row md:items-center justify-between">
             <div>
-              <div className="flex flex-wrap items-center gap-2 mb-1">
+              <div className="flex flex-wrap items-center gap-2 mb-1 md:mb-2">
                 <h3 className="text-base md:text-lg font-semibold truncate max-w-[150px] sm:max-w-xs md:max-w-md">
                   {client.name}
                 </h3>
                 
                 {!isMobile && (
-                  <Badge variant={client.isVerified === true ? "default" : 
-                              client.isVerified === "pending" ? "outline" : 
-                              "destructive"}
-                      className={`ml-2 shadow-sm ${client.isVerified === true ? 'bg-green-600 hover:bg-green-700' : ''}`}>
+                  <Badge variant="outline"
+                         className={`ml-2 px-2 py-0.5 shadow-sm ${colors.badge} ${colors.badgeBorder} text-white`}>
                     {client.isVerified === true ? (
                       <span className="flex items-center gap-1">
                         <Check size={12} /> Verified
@@ -96,22 +134,22 @@ const ClientCard = ({ client, index, onStatusUpdate }: ClientCardProps) => {
                 )}
               </div>
               
-              <div className="flex flex-wrap items-center gap-2 md:gap-4 text-xs md:text-sm text-muted-foreground">
-                <span className="flex items-center gap-1">
+              <div className="flex flex-wrap items-center gap-3 md:gap-4 text-xs md:text-sm text-muted-foreground">
+                <span className="flex items-center gap-1 bg-primary/5 dark:bg-primary/10 px-2 py-0.5 rounded-full">
                   <span className="font-medium">FY:</span>
                   {client.financialYear}
                 </span>
                 
-                <span className="flex items-center gap-1">
+                <span className="flex items-center gap-1 bg-primary/5 dark:bg-primary/10 px-2 py-0.5 rounded-full">
                   <Calendar size={14} className="text-muted-foreground" />
                   {format(client.date, 'dd/MM/yy')}
                 </span>
               </div>
             </div>
             
-            <div className="mt-2 md:mt-0">
+            <div className="mt-3 md:mt-0">
               {isUpdating ? (
-                <Button disabled size="sm" variant="outline" className="text-xs w-full md:w-auto rounded-full">
+                <Button disabled size="sm" variant="outline" className="text-xs w-full md:w-auto rounded-full border shadow-sm">
                   <Loader2 className="h-3 w-3 md:h-4 md:w-4 animate-spin mr-1" />
                   <span>Updating...</span>
                 </Button>
@@ -122,8 +160,8 @@ const ClientCard = ({ client, index, onStatusUpdate }: ClientCardProps) => {
                             variant={client.isVerified === true ? "default" : 
                                    client.isVerified === "pending" ? "outline" : 
                                    "destructive"} 
-                            className={`flex items-center gap-1 text-xs md:text-sm w-full md:w-auto rounded-full shadow-sm
-                                      ${client.isVerified === true ? 'bg-green-600 hover:bg-green-700' : ''}`}
+                            className={`flex items-center gap-1 text-xs md:text-sm md:w-auto rounded-full shadow-sm
+                                       ${client.isVerified === true ? colors.badge : ''}`}
                     >
                       {client.isVerified === true ? (
                         <>
@@ -141,31 +179,38 @@ const ClientCard = ({ client, index, onStatusUpdate }: ClientCardProps) => {
                           <span className="ml-1">Not Verified</span>
                         </>
                       )}
+                      <MoreVertical size={14} className="ml-1 opacity-70" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align={isMobile ? "center" : "end"} className="w-52">
+                  <DropdownMenuContent align={isMobile ? "center" : "end"} className="w-52 border border-primary/10 dark:border-primary/20 shadow-lg animate-in fade-in-0 zoom-in-95 duration-100">
                     <DropdownMenuItem 
                       onClick={() => handleStatusChange(true)}
                       disabled={client.isVerified === true}
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-2 cursor-pointer"
                     >
-                      <Check size={14} className="text-green-500" />
+                      <div className="bg-green-500/20 dark:bg-green-500/30 p-1 rounded-full">
+                        <Check size={14} className="text-green-600 dark:text-green-400" />
+                      </div>
                       <span>Mark as Verified</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       onClick={() => handleStatusChange("pending")}
                       disabled={client.isVerified === "pending"}
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-2 cursor-pointer"
                     >
-                      <Clock size={14} className="text-amber-500" />
+                      <div className="bg-amber-500/20 dark:bg-amber-500/30 p-1 rounded-full">
+                        <Clock size={14} className="text-amber-600 dark:text-amber-400" />
+                      </div>
                       <span>Mark as Pending</span>
                     </DropdownMenuItem>
                     <DropdownMenuItem 
                       onClick={() => handleStatusChange(false)}
                       disabled={client.isVerified === false}
-                      className="flex items-center gap-2"
+                      className="flex items-center gap-2 cursor-pointer"
                     >
-                      <X size={14} className="text-red-500" />
+                      <div className="bg-red-500/20 dark:bg-red-500/30 p-1 rounded-full">
+                        <X size={14} className="text-red-600 dark:text-red-400" />
+                      </div>
                       <span>Mark as Not Verified</span>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
